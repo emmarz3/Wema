@@ -1,0 +1,136 @@
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+@import "tailwindcss";
+
+/* ==========================================================================
+   ProofOps design tokens — Wema-inspired purple and white palette.
+   Practical design tokens, not an official brand specification.
+   ========================================================================== */
+@theme {
+  /* Typography */
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular,
+    Menlo, Consolas, monospace;
+
+  /* Brand */
+  --color-brand: #990d81; /* primary purple */
+  --color-brand-hover: #7f0a6b;
+  --color-brand-active: #660855;
+  --color-accent: #ae328e; /* secondary purple */
+  --color-plum: #38203b; /* deep plum */
+
+  /* Surfaces */
+  --color-canvas: #f5f4f7; /* page background */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f0edf2; /* secondary surface */
+  --color-surface-sunken: #ebe7ee;
+
+  /* Content */
+  --color-ink: #26212b; /* main text */
+  --color-ink-secondary: #6d6673; /* secondary text */
+  --color-ink-inverse: #ffffff;
+
+  /* Lines */
+  --color-line: #e4dee7; /* borders */
+  --color-line-strong: #cdc4ce;
+
+  /* Status — semantic, consistent everywhere (colour never used alone:
+     every status also carries text and/or an icon) */
+  --color-success: #287d61; /* verified / healthy / delivered */
+  --color-warning: #a66b16; /* review / degraded */
+  --color-danger: #b42318; /* mismatch / failed / critical */
+  --color-info: #315e8a; /* informational */
+
+  /* Status tints (readable backgrounds behind status text) */
+  --color-success-soft: color-mix(in oklab, #287d61 10%, #ffffff);
+  --color-success-line: color-mix(in oklab, #287d61 32%, #ffffff);
+  --color-warning-soft: color-mix(in oklab, #a66b16 12%, #ffffff);
+  --color-warning-line: color-mix(in oklab, #a66b16 34%, #ffffff);
+  --color-danger-soft: color-mix(in oklab, #b42318 9%, #ffffff);
+  --color-danger-line: color-mix(in oklab, #b42318 30%, #ffffff);
+  --color-info-soft: color-mix(in oklab, #315e8a 10%, #ffffff);
+  --color-info-line: color-mix(in oklab, #315e8a 30%, #ffffff);
+  --color-brand-soft: color-mix(in oklab, #990d81 8%, #ffffff);
+  --color-brand-line: color-mix(in oklab, #990d81 26%, #ffffff);
+  --color-plum-soft: color-mix(in oklab, #38203b 8%, #ffffff);
+
+  /* Radii — restrained, 8–12px component radii */
+  --radius-control: 8px;
+  --radius-panel: 12px;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 250ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+    font-feature-settings: "cv05" 1;
+  }
+
+  /* Visible, consistent keyboard focus. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+
+  /* Tabular numerals for every numeric readout unless opted out. */
+  [data-numeric="true"] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  ::selection {
+    @apply bg-brand-soft text-plum;
+  }
+}
+
+@layer utilities {
+  /* Technical identifiers: references, proof IDs, event IDs, logs, code. */
+  .font-technical {
+    @apply font-mono text-[0.8125rem] tracking-tight;
+  }
+
+  /* Full-height app shell helper. */
+  .shell-height {
+    height: 100dvh;
+  }
+
+  /* Smooth in-page navigation for the public site; sections clear the
+     sticky header when scrolled to. */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .section-anchor {
+    scroll-margin-top: 4.5rem;
+  }
+
+  /* Restrained hero grid backdrop — a flat wash, not decorative artwork. */
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, rgb(228 222 231 / 55%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(228 222 231 / 55%) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+}
+
+/* Honour the OS reduced-motion preference for any CSS transitions we keep. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
