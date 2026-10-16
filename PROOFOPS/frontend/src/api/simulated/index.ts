@@ -13,6 +13,9 @@
  */
 import type { ApiRequest, ApiResponse, Transport } from '../types';
 import { registerAuthHandlers } from './auth';
+import { registerVerificationHandlers } from './verification';
+import { registerReceiptHandlers } from './receipt';
+import { registerVerificationHandlers } from './verification';
 
 /** A handler implements one contract route against the simulated store. */
 export type SimulatedHandler = (request: ApiRequest) => Promise<ApiResponse> | ApiResponse;
@@ -115,3 +118,6 @@ export function createSimulatedTransport(): Transport {
    runs after the handler registry exists; later phases register their
    handlers alongside their screens. */
 registerAuthHandlers();
+registerVerificationHandlers();
+registerReceiptHandlers();
+registerVerificationHandlers();

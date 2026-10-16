@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "ProofOps — financial verification and infrastructure intelligence platform (workspace frontend). Wema Hackathon Edition.",
+  "description": "ProofOps \u2014 financial verification and infrastructure intelligence platform (workspace frontend). Wema Hackathon Edition.",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "dev": "node init && vite",
+    "build": "node init && tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
