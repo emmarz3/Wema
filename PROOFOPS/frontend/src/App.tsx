@@ -12,12 +12,15 @@ import { DesignSystemPage } from './pages/DesignSystemPage';
 import { SignInPage } from './pages/SignInPage';
 import { NotFoundPage } from './pages/PublicNotices';
 import { SectionInProgress } from './pages/SectionInProgress';
+import { VerificationPage } from './pages/VerificationPage';
+import { ReceiptPage } from './pages/ReceiptPage';
 import { AuthProvider, useAuth } from './state/auth';
 
 /** Workspace sections and the routes that deliver them. */
 const WORKSPACE_SECTIONS = [
   { path: '/app', section: 'overview' },
-  { path: '/app/verification', section: 'verification' },
+  { path: '/app/verification', section: 'verification', component: VerificationPage },
+  { path: '/app/receipt', section: 'receipt', component: ReceiptPage },
   { path: '/app/proof', section: 'proof' },
   { path: '/app/reconciliation', section: 'reconciliation' },
   { path: '/app/infrastructure', section: 'infrastructure' },
@@ -105,6 +108,11 @@ function SectionRoute({ section }: { section: string }) {
   const { role } = useAuth();
   if (role && !canSeeSection(role, section)) {
     return <SectionRestricted sectionId={section} />;
+  }
+  // Use the component mapped for this section, or fall back to in-progress.
+  const sectionConfig = WORKSPACE_SECTIONS.find((s) => s.section === section);
+  if (sectionConfig && sectionConfig.component) {
+    return <sectionConfig.component />;
   }
   return <SectionInProgress />;
 }
